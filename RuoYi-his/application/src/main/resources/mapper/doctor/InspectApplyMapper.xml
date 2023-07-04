@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jshand.module.doctor.mapper.InspectApplyMapper">
+
+    <resultMap type="InspectApply" id="InspectApplyResult">
+            <result property="id" column="id"/>
+            <result property="itemId" column="item_id"/>
+            <result property="itemName" column="item_name"/>
+            <result property="fee" column="fee"/>
+            <result property="status" column="status"/>
+            <result property="registerId" column="register_id"/>
+            <result property="active" column="active"/>
+            <result property="createtime" column="createtime"/>
+    </resultMap>
+
+
+    <sql id="selectInspectApplyVo">
+        select id, item_id, item_name, fee, status, register_id, active, createtime
+        from inspect_apply
+    </sql>
+
+
+</mapper>

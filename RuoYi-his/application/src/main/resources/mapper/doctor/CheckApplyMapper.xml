@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jshand.module.doctor.mapper.CheckApplyMapper">
+
+    <resultMap type="CheckApply" id="CheckApplyResult">
+            <result property="id" column="id"/>
+            <result property="registerId" column="register_id"/>
+            <result property="itemId" column="item_id"/>
+            <result property="itemName" column="item_name"/>
+            <result property="fee" column="fee"/>
+            <result property="status" column="status"/>
+            <result property="active" column="active"/>
+            <result property="createtime" column="createtime"/>
+    </resultMap>
+
+
+
+    <resultMap type="org.jshand.module.medical_technology.vo.CheckApplyVO" id="CheckApplyResult2">
+        <result property="id" column="id"/>
+        <result property="registerId" column="register_id"/>
+        <result property="itemId" column="item_id"/>
+        <result property="itemName" column="item_name"/>
+        <result property="fee" column="fee"/>
+        <result property="status" column="status"/>
+        <result property="active" column="active"/>
+        <result property="createtime" column="createtime"/>
+
+
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="idno" column="idno"/>
+        <result property="birthday" column="birthday"/>
+        <result property="age" column="age"/>
+        <result property="address" column="address"/>
+        <result property="regsitLevelId" column="regsit_level_id"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="doctorId" column="doctor_id"/>
+        <result property="book" column="book"/>
+        <result property="visittime" column="visittime"/>
+        <result property="readme" column="readme"/>
+        <result property="present" column="present"/>
+        <result property="presentTreat" column="present_treat"/>
+        <result property="history" column="history"/>
+        <result property="allergy" column="allergy"/>
+        <result property="disease" column="disease"/>
+        <result property="suit" column="suit"/>
+        <result property="drug" column="drug"/>
+
+
+
+    </resultMap>
+
+    <sql id="selectCheckApplyVo">
+        select id, register_id, item_id, item_name, fee, status, active, createtime
+        from check_apply
+    </sql>
+
+
+    <select id="selectApplyByRegister" resultMap="CheckApplyResult2">
+
+
+        SELECT
+        app.`id`,
+        `register_id`,
+        `item_id`,
+        `item_name`,
+        app.`fee`,
+        app.`status`,
+        app.`active`,
+        app.`createtime` ,
+
+        `name`,
+        `gender`,
+        `idno`,
+        `birthday`,
+        `age`,
+        `address`,
+        `regsit_level_id`,
+        `dept_id`,
+        `doctor_id`,
+        `book`,
+        `visittime`,
+        `readme`,
+        `present`,
+        `present_treat`,
+        `history`,
+        `allergy`,
+        `disease`,
+        `suit`,
+        `drug`
+
+        FROM
+            check_apply app
+            JOIN register r
+            ON app.`register_id` = r.`id`
+
+        <where>
+
+            <if test="vo.name!=null and  vo.name != ''">
+                and r.`name` LIKE concat('%',   concat(#{vo.name}) ,'%'       )
+            </if>
+
+            <if test="vo.registerId!=null ">
+                and app.`register_id`  =  #{vo.registerId}
+            </if>
+
+            <if test="vo.itemName!=null and  vo.itemName != ''">
+                and app.`item_name` LIKE concat('%',   concat(#{vo.itemName}) ,'%'       )
+            </if>
+
+
+        </where>
+
+    </select>
+
+
+</mapper>

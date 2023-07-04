@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jshand.module.system.mapper.SysFileInfoMapper">
+
+    <resultMap type="SysFileInfo" id="SysFileInfoResult">
+            <result property="fileId" column="file_id"/>
+            <result property="fileName" column="file_name"/>
+            <result property="orgName" column="org_name"/>
+            <result property="filePath" column="file_path"/>
+            <result property="ip" column="ip"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+    <sql id="selectSysFileInfoVo">
+        select file_id, file_name, org_name, file_path, ip, create_by, create_time
+        from sys_file_info
+    </sql>
+
+
+</mapper>

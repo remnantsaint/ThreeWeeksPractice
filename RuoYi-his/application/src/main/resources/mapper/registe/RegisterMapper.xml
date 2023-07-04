@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jshand.module.registe.mapper.RegisterMapper">
+
+    <resultMap type="Register" id="RegisterResult">
+            <result property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="gender" column="gender"/>
+            <result property="idno" column="idno"/>
+            <result property="birthday" column="birthday"/>
+            <result property="age" column="age"/>
+            <result property="address" column="address"/>
+            <result property="regsitLevelId" column="regsit_level_id"/>
+            <result property="deptId" column="dept_id"/>
+            <result property="doctorId" column="doctor_id"/>
+            <result property="book" column="book"/>
+            <result property="visittime" column="visittime"/>
+            <result property="fee" column="fee"/>
+            <result property="readme" column="readme"/>
+            <result property="present" column="present"/>
+            <result property="presentTreat" column="present_treat"/>
+            <result property="history" column="history"/>
+            <result property="allergy" column="allergy"/>
+            <result property="disease" column="disease"/>
+            <result property="suit" column="suit"/>
+            <result property="drug" column="drug"/>
+            <result property="status" column="status"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateBy" column="update_by"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="remark" column="remark"/>
+            <result property="isDelete" column="is_delete"/>
+    </resultMap>
+
+
+    <sql id="selectRegisterVo">
+        select id, name, gender, idno, birthday, age, address, regsit_level_id, dept_id, doctor_id, book, visittime, fee, readme, present, present_treat, history, allergy, disease, suit, drug, status, create_by, create_time, update_by, update_time, remark, is_delete
+        from register
+    </sql>
+
+
+
+
+
+        <resultMap id="ItemByRegisterResultMap" type="org.jshand.module.registe.domain.ApplyItem" >
+            <result property="id" column="id"/>
+            <result property="registerId" column="register_id"/>
+            <result property="itemId" column="item_id"/>
+            <result property="itemName" column="item_name"/>
+            <result property="fee" column="fee"/>
+            <result property="status" column="status"/>
+            <result property="active" column="active"/>
+            <result property="type" column="type"/>
+            <result property="idno" column="idno"/>
+            <result property="registerName" column="name"/>
+        </resultMap>
+
+<!--        根据患者病历号查询 已申请的检查、检验项目-->
+
+       <select id="selectItemByRegisterId" resultMap="ItemByRegisterResultMap" parameterType="long">
+           SELECT c.id, c.register_id, c.item_id, c.item_name, c.fee, c.status, c.active ,'check' TYPE,register.`idno` ,register.name
+           FROM check_apply  c JOIN  register ON c.`register_id` = register.id  where c.register_id = #{registerId}
+           UNION
+           ALL
+           SELECT i.id, i.register_id, i.item_id, i.item_name, i.fee, i.status, i.active, 'inspect' TYPE ,register.`idno`,register.name
+           FROM  inspect_apply  i  JOIN  register ON i.`register_id` = register.id where i.register_id = #{registerId}
+
+       </select>
+
+
+
+
+
+
+
+</mapper>
